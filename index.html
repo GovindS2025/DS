@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sliding Window Algorithm Animations</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .nav-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        
+        .nav-card:hover {
+            transform: translateY(-5px);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .nav-card h3 {
+            margin: 0 0 15px 0;
+            font-size: 24px;
+        }
+        
+        .nav-card p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .feature-list {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .feature-list h3 {
+            color: #333;
+            margin-top: 0;
+        }
+        
+        .feature-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .feature-list li:before {
+            content: "✅ ";
+            margin-right: 10px;
+        }
+        
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Sliding Window Algorithm Animations</h1>
+        <p class="subtitle">Interactive visualizations and step-by-step explanations</p>
+        
+        <div class="nav-grid">
+            <a href="sliding_window_simple_animation.html" class="nav-card">
+                <h3>🚀 Interactive Animation</h3>
+                <p>Fully animated sliding window visualization with step-by-step controls</p>
+            </a>
+            
+            <a href="sliding_window_detailed_animation.html" class="nav-card">
+                <h3>📊 Detailed Analysis</h3>
+                <p>Advanced animation with algorithm step tracking and detailed explanations</p>
+            </a>
+            
+            <a href="sliding_window_mermaid_diagram.md" class="nav-card">
+                <h3>📝 Mermaid Diagrams</h3>
+                <p>Static flowcharts and diagrams that render directly in GitHub</p>
+            </a>
+            
+            <a href="SLIDING_WINDOW_DOCUMENTATION.md" class="nav-card">
+                <h3>📚 Complete Documentation</h3>
+                <p>Comprehensive guide with examples, complexity analysis, and best practices</p>
+            </a>
+        </div>
+        
+        <div class="feature-list">
+            <h3>🌟 Features</h3>
+            <ul>
+                <li>Interactive step-by-step animations</li>
+                <li>Visual pointer tracking (left and right)</li>
+                <li>Real-time window size and character tracking</li>
+                <li>Detailed explanations for each step</li>
+                <li>Multiple algorithm examples</li>
+                <li>Mermaid diagrams for GitHub integration</li>
+                <li>Complete documentation and code examples</li>
+            </ul>
+        </div>
+        
+        <div class="code-example">
+<pre><code>// Example: Longest Substring Without Repeating Characters
+public static int longestSubstringWithoutRepeating(String s) {
+    Set&lt;Character&gt; window = new HashSet&lt;&gt;();
+    int left = 0;
+    int maxLength = 0;
+    
+    for (int right = 0; right &lt; s.length(); right++) {
+        char currentChar = s.charAt(right);
+        
+        // Shrink window from left until no duplicates
+        while (window.contains(currentChar)) {
+            window.remove(s.charAt(left));
+            left++;
+        }
+        
+        window.add(currentChar);
+        maxLength = Math.max(maxLength, right - left + 1);
+    }
+    
+    return maxLength;
+}</code></pre>
+        </div>
+        
+        <div class="footer">
+            <p>🎯 Master the sliding window technique with interactive visualizations</p>
+        </div>
+    </div>
+</body>
+</html>

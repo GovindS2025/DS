@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sliding Window Animation - Simple Version</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .string-display {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .char {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            margin: 0 3px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .char.window {
+            background-color: #4CAF50;
+            color: white;
+            border: 2px solid #2E7D32;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+        }
+        
+        .char.left-ptr {
+            background-color: #FF5722;
+            color: white;
+            border: 3px solid #D32F2F;
+            box-shadow: 0 0 10px rgba(255, 87, 34, 0.5);
+            animation: leftPulse 1s infinite;
+        }
+        
+        .char.right-ptr {
+            background-color: #2196F3;
+            color: white;
+            border: 3px solid #1976D2;
+            box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+            animation: rightPulse 1s infinite;
+        }
+        
+        @keyframes leftPulse {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 87, 34, 0.5); }
+            50% { transform: scale(1.2); box-shadow: 0 0 15px rgba(255, 87, 34, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 87, 34, 0.5); }
+        }
+        
+        @keyframes rightPulse {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(33, 150, 243, 0.5); }
+            50% { transform: scale(1.2); box-shadow: 0 0 15px rgba(33, 150, 243, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 10px rgba(33, 150, 243, 0.5); }
+        }
+        
+        .info {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .info-item {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .info-item h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .info-item .value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background: #1976D2;
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .explanation {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .step-info {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px 0;
+            color: #666;
+        }
+        
+        .pointer-labels {
+            text-align: center;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .pointer-label {
+            display: inline-block;
+            width: 35px;
+            margin: 0 3px;
+            text-align: center;
+        }
+        
+        .left-label {
+            color: #FF5722;
+            text-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
+        }
+        
+        .right-label {
+            color: #2196F3;
+            text-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Sliding Window Algorithm Animation</h1>
+        <p style="text-align: center; color: #666;">Longest Substring Without Repeating Characters</p>
+        
+        <div class="step-info">
+            Step <span id="stepNum">0</span> of <span id="totalSteps">12</span>
+        </div>
+        
+        <div class="string-display" id="stringDisplay"></div>
+        <div class="pointer-labels" id="pointerLabels"></div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #4CAF50;"></span>
+                <span>Window Characters</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #FF5722;"></span>
+                <span>Left Pointer (L)</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #2196F3;"></span>
+                <span>Right Pointer (R)</span>
+            </div>
+        </div>
+        
+        <div class="info">
+            <div class="info-item">
+                <h3>Left Pointer</h3>
+                <div class="value" id="leftPos">0</div>
+            </div>
+            <div class="info-item">
+                <h3>Right Pointer</h3>
+                <div class="value" id="rightPos">0</div>
+            </div>
+            <div class="info-item">
+                <h3>Window Size</h3>
+                <div class="value" id="windowSize">0</div>
+            </div>
+            <div class="info-item">
+                <h3>Max Length</h3>
+                <div class="value" id="maxLength">0</div>
+            </div>
+        </div>
+        
+        <div class="info">
+            <div class="info-item">
+                <h3>Window Characters</h3>
+                <div class="value" id="windowChars">[]</div>
+            </div>
+            <div class="info-item">
+                <h3>Current Char</h3>
+                <div class="value" id="currentChar">-</div>
+            </div>
+            <div class="info-item">
+                <h3>Action</h3>
+                <div class="value" id="action">Initialize</div>
+            </div>
+            <div class="info-item">
+                <h3>Status</h3>
+                <div class="value" id="status">Ready</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="startAnimation()" id="startBtn">🚀 Start Animation</button>
+            <button onclick="nextStep()" id="nextBtn">⏭️ Next Step</button>
+            <button onclick="prevStep()" id="prevBtn" disabled>⏮️ Previous</button>
+            <button onclick="reset()" id="resetBtn">🔄 Reset</button>
+        </div>
+        
+        <div class="explanation" id="explanation">
+            <h3>📝 Explanation</h3>
+            <p>Click "Start Animation" to see the sliding window algorithm in action!</p>
+        </div>
+    </div>
+
+    <script>
+        // Algorithm data
+        const s = "abcabcbb";
+        const steps = [
+            { left: 0, right: 0, window: [], maxLength: 0, action: "Initialize", char: 'a', explanation: "Starting with left=0, right=0. Adding 'a' to window." },
+            { left: 0, right: 1, window: ['a', 'b'], maxLength: 1, action: "Expand", char: 'b', explanation: "Moving right pointer. Adding 'b' to window. Window size: 2" },
+            { left: 0, right: 2, window: ['a', 'b', 'c'], maxLength: 2, action: "Expand", char: 'c', explanation: "Moving right pointer. Adding 'c' to window. Window size: 3" },
+            { left: 1, right: 3, window: ['b', 'c'], maxLength: 3, action: "Shrink", char: 'a', explanation: "Duplicate 'a' found! Shrinking window from left. Removed 'a' at position 0." },
+            { left: 1, right: 4, window: ['b', 'c', 'a'], maxLength: 3, action: "Expand", char: 'a', explanation: "Moving right pointer. Adding 'a' to window. Window size: 3" },
+            { left: 2, right: 5, window: ['c', 'a'], maxLength: 3, action: "Shrink", char: 'b', explanation: "Duplicate 'b' found! Shrinking window from left. Removed 'b' at position 1." },
+            { left: 2, right: 6, window: ['c', 'a', 'b'], maxLength: 3, action: "Expand", char: 'b', explanation: "Moving right pointer. Adding 'b' to window. Window size: 3" },
+            { left: 3, right: 7, window: ['a', 'b'], maxLength: 3, action: "Shrink", char: 'b', explanation: "Duplicate 'b' found! Shrinking window from left. Removed 'c' at position 2." },
+            { left: 4, right: 7, window: ['b'], maxLength: 3, action: "Shrink", char: 'b', explanation: "Still duplicate 'b'! Continue shrinking. Removed 'a' at position 3." },
+            { left: 5, right: 7, window: ['b'], maxLength: 3, action: "Shrink", char: 'b', explanation: "Still duplicate 'b'! Continue shrinking. Removed 'b' at position 4." },
+            { left: 6, right: 7, window: ['b'], maxLength: 3, action: "Shrink", char: 'b', explanation: "Still duplicate 'b'! Continue shrinking. Removed 'b' at position 5." },
+            { left: 7, right: 7, window: ['b'], maxLength: 3, action: "Complete", char: 'b', explanation: "Animation complete! Final result: 3 (substring 'abc')" }
+        ];
+        
+        // State variables
+        let currentStep = 0;
+        let isAnimating = false;
+        let animationInterval;
+        
+        // Initialize display
+        function updateDisplay() {
+            const step = steps[currentStep];
+            
+            // Update string display
+            let display = "";
+            for (let i = 0; i < s.length; i++) {
+                let classes = "char";
+                if (i >= step.left && i <= step.right) {
+                    classes += " window";
+                }
+                if (i === step.left) {
+                    classes += " left-ptr";
+                }
+                if (i === step.right) {
+                    classes += " right-ptr";
+                }
+                display += `<span class="${classes}">${s[i]}</span>`;
+            }
+            document.getElementById("stringDisplay").innerHTML = display;
+            
+            // Update pointer labels
+            let labels = "";
+            for (let i = 0; i < s.length; i++) {
+                let labelClass = "pointer-label";
+                let labelText = "";
+                
+                if (i === step.left) {
+                    labelClass += " left-label";
+                    labelText = "L";
+                } else if (i === step.right) {
+                    labelClass += " right-label";
+                    labelText = "R";
+                } else {
+                    labelText = " ";
+                }
+                
+                labels += `<span class="${labelClass}">${labelText}</span>`;
+            }
+            document.getElementById("pointerLabels").innerHTML = labels;
+            
+            // Update info panels
+            document.getElementById("leftPos").textContent = step.left;
+            document.getElementById("rightPos").textContent = step.right;
+            document.getElementById("windowSize").textContent = step.right - step.left + 1;
+            document.getElementById("maxLength").textContent = step.maxLength;
+            document.getElementById("windowChars").textContent = "[" + step.window.join(", ") + "]";
+            document.getElementById("currentChar").textContent = step.char;
+            document.getElementById("action").textContent = step.action;
+            document.getElementById("status").textContent = currentStep === steps.length - 1 ? "Complete" : "In Progress";
+            document.getElementById("stepNum").textContent = currentStep + 1;
+            
+            // Update explanation
+            document.getElementById("explanation").innerHTML = 
+                `<h3>📝 Explanation</h3><p>${step.explanation}</p>`;
+        }
+        
+        // Animation functions
+        function startAnimation() {
+            if (isAnimating) return;
+            
+            isAnimating = true;
+            document.getElementById("startBtn").textContent = "⏸️ Pause";
+            document.getElementById("startBtn").onclick = pauseAnimation;
+            
+            animationInterval = setInterval(() => {
+                if (currentStep >= steps.length - 1) {
+                    pauseAnimation();
+                    return;
+                }
+                nextStep();
+            }, 2000);
+        }
+        
+        function pauseAnimation() {
+            isAnimating = false;
+            clearInterval(animationInterval);
+            document.getElementById("startBtn").textContent = "🚀 Resume";
+            document.getElementById("startBtn").onclick = startAnimation;
+        }
+        
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateDisplay();
+                updateButtons();
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateDisplay();
+                updateButtons();
+            }
+        }
+        
+        function reset() {
+            pauseAnimation();
+            currentStep = 0;
+            updateDisplay();
+            updateButtons();
+            document.getElementById("startBtn").textContent = "🚀 Start Animation";
+            document.getElementById("startBtn").onclick = startAnimation;
+        }
+        
+        function updateButtons() {
+            document.getElementById("nextBtn").disabled = currentStep >= steps.length - 1;
+            document.getElementById("prevBtn").disabled = currentStep <= 0;
+        }
+        
+        // Initialize
+        updateDisplay();
+        updateButtons();
+    </script>
+</body>
+</html>

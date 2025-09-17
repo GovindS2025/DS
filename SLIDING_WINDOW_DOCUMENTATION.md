@@ -242,6 +242,38 @@ public static String minWindow(String s, String t) {
 
 ## Visual Examples
 
+### Interactive Animations
+
+For fully interactive animations, check out these HTML files:
+- [🚀 Simple Animation](sliding_window_simple_animation.html) - Basic step-by-step visualization
+- [📊 Detailed Animation](sliding_window_detailed_animation.html) - Advanced with algorithm tracking
+- [📝 Mermaid Diagrams](sliding_window_mermaid_diagram.md) - Static diagrams for GitHub
+
+### Algorithm Flowchart
+
+```mermaid
+flowchart TD
+    A[Start] --> B[Initialize left = 0, right = 0]
+    B --> C[Initialize window = Set()]
+    C --> D[Move right pointer]
+    D --> E[Add element to window]
+    E --> F{Character already in window?}
+    F -->|No| G[Update maxLength]
+    F -->|Yes| H[Shrink window from left]
+    H --> I[Remove left character]
+    I --> J[Move left pointer]
+    J --> K{More characters?}
+    G --> K
+    K -->|Yes| D
+    K -->|No| L[Return maxLength]
+    L --> M[End]
+    
+    style A fill:#e1f5fe
+    style M fill:#c8e6c9
+    style F fill:#fff3e0
+    style K fill:#fff3e0
+```
+
 ### Example 1: Longest Substring Without Repeating Characters
 
 ```

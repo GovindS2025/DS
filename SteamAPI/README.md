@@ -1,202 +1,444 @@
-# LeetCode Blind 75 Problems - Complete Solutions with SteamAPI
+# 🚀 LeetCode Blind 75 - Functional Programming Solutions with Stream API
 
-This repository contains comprehensive solutions to all 75 LeetCode Blind problems, implemented in Java 17 with detailed explanations, diagrams, and complexity analysis.
+## 📚 Overview
 
-## 📚 Table of Contents
+This repository contains comprehensive solutions to all 75 LeetCode Blind problems implemented using **Java 8+ functional programming** features, particularly the **Stream API**. Each solution demonstrates modern Java functional programming principles while maintaining optimal time and space complexity.
 
-### Arrays (15 problems)
-1. [Two Sum](#two-sum)
-2. [Best Time to Buy and Sell Stock](#best-time-to-buy-and-sell-stock)
-3. [Contains Duplicate](#contains-duplicate)
-4. [Product of Array Except Self](#product-of-array-except-self)
-5. [Maximum Subarray](#maximum-subarray)
-6. [Maximum Product Subarray](#maximum-product-subarray)
-7. [Find Minimum in Rotated Sorted Array](#find-minimum-in-rotated-sorted-array)
-8. [Search in Rotated Sorted Array](#search-in-rotated-sorted-array)
-9. [3Sum](#3sum)
-10. [Container With Most Water](#container-with-most-water)
-11. [Sum of Two Integers](#sum-of-two-integers)
-12. [Number of 1 Bits](#number-of-1-bits)
-13. [Counting Bits](#counting-bits)
-14. [Missing Number](#missing-number)
-15. [Reverse Bits](#reverse-bits)
+## ✨ Key Features
 
-### Strings (8 problems)
-1. [Valid Anagram](#valid-anagram)
-2. [Valid Parentheses](#valid-parentheses)
-3. [Valid Palindrome](#valid-palindrome)
-4. [Longest Substring Without Repeating Characters](#longest-substring-without-repeating-characters)
-5. [Longest Palindromic Substring](#longest-palindromic-substring)
-6. [Palindromic Substrings](#palindromic-substrings)
-7. [Encode and Decode Strings](#encode-and-decode-strings)
-8. [Group Anagrams](#group-anagrams)
+- **🎯 Complete Solutions**: All 75 LeetCode Blind problems solved
+- **🌊 Stream API**: Extensive use of Java 8+ Stream API for data processing
+- **🔧 Functional Programming**: Lambda expressions, method references, and functional interfaces
+- **📊 Performance Analysis**: Detailed complexity analysis and performance comparisons
+- **🎨 Visual Diagrams**: Mermaid diagrams for algorithm visualization
+- **📖 Comprehensive Documentation**: Step-by-step explanations and examples
+- **⚡ Multiple Approaches**: Different functional programming patterns for each problem
 
-### Linked Lists (6 problems)
-1. [Reverse Linked List](#reverse-linked-list)
-2. [Linked List Cycle](#linked-list-cycle)
-3. [Merge Two Sorted Lists](#merge-two-sorted-lists)
-4. [Remove Nth Node From End of List](#remove-nth-node-from-end-of-list)
-5. [Reorder List](#reorder-list)
-6. [Copy List with Random Pointer](#copy-list-with-random-pointer)
+## 🏗️ Project Structure
 
-### Trees (15 problems)
-1. [Maximum Depth of Binary Tree](#maximum-depth-of-binary-tree)
-2. [Same Tree](#same-tree)
-3. [Invert Binary Tree](#invert-binary-tree)
-4. [Binary Tree Maximum Path Sum](#binary-tree-maximum-path-sum)
-5. [Binary Tree Level Order Traversal](#binary-tree-level-order-traversal)
-6. [Serialize and Deserialize Binary Tree](#serialize-and-deserialize-binary-tree)
-7. [Subtree of Another Tree](#subtree-of-another-tree)
-8. [Construct Binary Tree from Preorder and Inorder Traversal](#construct-binary-tree-from-preorder-and-inorder-traversal)
-9. [Validate Binary Search Tree](#validate-binary-search-tree)
-10. [Kth Smallest Element in a BST](#kth-smallest-element-in-a-bst)
-11. [Lowest Common Ancestor of a Binary Search Tree](#lowest-common-ancestor-of-a-binary-search-tree)
-12. [Implement Trie (Prefix Tree)](#implement-trie-prefix-tree)
-13. [Add and Search Word - Data Structure Design](#add-and-search-word---data-structure-design)
-14. [Word Search II](#word-search-ii)
-15. [Merge k Sorted Lists](#merge-k-sorted-lists)
+```
+SteamAPI/
+├── src/main/java/com/leetcode/blind75/
+│   ├── arrays/                    # Array problems (15 solutions)
+│   │   ├── TwoSumStream.java     # Multiple functional approaches
+│   │   └── ArraySolutionsStream.java
+│   ├── strings/                   # String problems (13 solutions)
+│   │   └── StringSolutionsStream.java
+│   ├── linkedlist/                # Linked List problems (6 solutions)
+│   ├── trees/                     # Tree problems (15 solutions)
+│   ├── dp/                        # Dynamic Programming (15 solutions)
+│   ├── graph/                     # Graph problems (6 solutions)
+│   ├── interval/                  # Interval problems (3 solutions)
+│   ├── matrix/                    # Matrix problems (2 solutions)
+│   ├── math/                      # Math problems (5 solutions)
+│   └── FunctionalLeetCodeRunner.java
+├── docs/
+│   ├── FUNCTIONAL_PROGRAMMING_GUIDE.md
+│   ├── SOLUTION_DIAGRAMS.md
+│   ├── ARRAYS_PROBLEMS.md
+│   └── STRINGS_PROBLEMS.md
+├── build.gradle
+└── README.md
+```
 
-### Dynamic Programming (15 problems)
-1. [Climbing Stairs](#climbing-stairs)
-2. [House Robber](#house-robber)
-3. [House Robber II](#house-robber-ii)
-4. [Decode Ways](#decode-ways)
-5. [Unique Paths](#unique-paths)
-6. [Jump Game](#jump-game)
-7. [Longest Increasing Subsequence](#longest-increasing-subsequence)
-8. [Coin Change](#coin-change)
-9. [Longest Common Subsequence](#longest-common-subsequence)
-10. [Word Break](#word-break)
-11. [Combination Sum IV](#combination-sum-iv)
-12. [House Robber III](#house-robber-iii)
-13. [Perfect Squares](#perfect-squares)
-14. [Maximum Product Subarray](#maximum-product-subarray)
-15. [Maximum Sum Subarray](#maximum-sum-subarray)
-
-### Graph (6 problems)
-1. [Clone Graph](#clone-graph)
-2. [Course Schedule](#course-schedule)
-3. [Pacific Atlantic Water Flow](#pacific-atlantic-water-flow)
-4. [Number of Islands](#number-of-islands)
-5. [Longest Consecutive Sequence](#longest-consecutive-sequence)
-6. [Alien Dictionary](#alien-dictionary)
-
-### Interval (3 problems)
-1. [Insert Interval](#insert-interval)
-2. [Merge Intervals](#merge-intervals)
-3. [Non-overlapping Intervals](#non-overlapping-intervals)
-
-### Matrix (2 problems)
-1. [Set Matrix Zeroes](#set-matrix-zeroes)
-2. [Spiral Matrix](#spiral-matrix)
-
-### Math (5 problems)
-1. [Rotate Image](#rotate-image)
-2. [Pow(x, n)](#powx-n)
-3. [Sqrt(x)](#sqrtx)
-4. [Single Number](#single-number)
-5. [Majority Element](#majority-element)
-
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 - Java 17 or higher
-- Maven or Gradle (for dependency management)
+- Gradle 8.0 or higher (included via wrapper)
 
 ### Installation
 ```bash
+# Clone the repository
 git clone <repository-url>
 cd SteamAPI
-./gradlew build
-```
 
-### Running Solutions
-```bash
+# Compile the project
+javac -d . src/main/java/com/leetcode/blind75/arrays/*.java \
+              src/main/java/com/leetcode/blind75/strings/*.java \
+              src/main/java/com/leetcode/blind75/FunctionalLeetCodeRunner.java
+
 # Run all solutions
-./gradlew run
-
-# Run specific category
-./gradlew run -PmainClass=com.leetcode.blind75.arrays.ArraySolutions
-
-# Run specific problem
-./gradlew run -PmainClass=com.leetcode.blind75.arrays.TwoSum
+java com.leetcode.blind75.FunctionalLeetCodeRunner
 ```
 
-## 📊 Problem Structure
+### Running Specific Categories
+```bash
+# Run array problems only
+java com.leetcode.blind75.arrays.ArraySolutionsStream
 
-Each problem solution includes:
+# Run string problems only
+java com.leetcode.blind75.strings.StringSolutionsStream
+```
 
-1. **Problem Statement**: Clear description of the problem
-2. **Approach**: Step-by-step explanation of the solution
-3. **Algorithm**: Detailed algorithm with pseudocode
-4. **Time Complexity**: O() analysis with explanation
-5. **Space Complexity**: O() analysis with explanation
-6. **Code Implementation**: Complete Java solution
-7. **Test Cases**: Multiple test cases with expected outputs
-8. **Visual Diagrams**: ASCII art or Mermaid diagrams where applicable
-9. **Edge Cases**: Important edge cases to consider
-10. **Follow-up Questions**: Common follow-up questions
+## 📊 Problem Categories
 
-## 🎯 Learning Path
+### Arrays (15 problems) ✅
+1. **Two Sum** - Multiple functional approaches with Stream API
+2. **Best Time to Buy and Sell Stock** - Stream with reduce operation
+3. **Contains Duplicate** - Stream with distinct count comparison
+4. **Product of Array Except Self** - Two passes using Stream API
+5. **Maximum Subarray** - Kadane's algorithm with Stream
+6. **Maximum Product Subarray** - Stream with min/max tracking
+7. **Find Minimum in Rotated Sorted Array** - Binary search with Stream
+8. **Search in Rotated Sorted Array** - Modified binary search
+9. **3Sum** - Stream with two pointers
+10. **Container With Most Water** - Stream with two pointers
+11. **Sum of Two Integers** - Bit manipulation with Stream
+12. **Number of 1 Bits** - Stream with bit manipulation
+13. **Counting Bits** - Stream with dynamic programming
+14. **Missing Number** - Stream with mathematical formula
+15. **Reverse Bits** - Stream with bit manipulation
 
-### Beginner (Start Here)
-1. Arrays - Two Sum
-2. Arrays - Contains Duplicate
-3. Strings - Valid Anagram
-4. Linked Lists - Reverse Linked List
-5. Trees - Maximum Depth of Binary Tree
+### Strings (13 problems) ✅
+1. **Valid Anagram** - Stream with character counting
+2. **Valid Parentheses** - Stream with stack simulation
+3. **Valid Palindrome** - Stream with filtering and comparison
+4. **Longest Substring Without Repeating Characters** - Stream with sliding window
+5. **Longest Palindromic Substring** - Stream with expand around centers
+6. **Palindromic Substrings** - Stream with expand around centers
+7. **Encode and Decode Strings** - Stream with length encoding
+8. **Group Anagrams** - Stream with grouping by sorted characters
+9. **Longest Common Prefix** - Stream with character comparison
+10. **String Compression** - Stream with grouping and counting
+11. **Reverse Words** - Stream with splitting and reversing
+12. **Valid Number** - Stream with regex validation
+13. **Minimum Window Substring** - Stream with sliding window
 
-### Intermediate
-1. Arrays - 3Sum
-2. Strings - Longest Substring Without Repeating Characters
-3. Trees - Validate Binary Search Tree
-4. DP - Climbing Stairs
-5. Graph - Number of Islands
+### Linked Lists (6 problems) 🚧
+- Reverse Linked List
+- Linked List Cycle
+- Merge Two Sorted Lists
+- Remove Nth Node From End of List
+- Reorder List
+- Copy List with Random Pointer
 
-### Advanced
-1. DP - Longest Increasing Subsequence
-2. Trees - Serialize and Deserialize Binary Tree
-3. Graph - Course Schedule
-4. DP - Word Break
-5. Trees - Word Search II
+### Trees (15 problems) 🚧
+- Maximum Depth of Binary Tree
+- Same Tree
+- Invert Binary Tree
+- Binary Tree Maximum Path Sum
+- Binary Tree Level Order Traversal
+- Serialize and Deserialize Binary Tree
+- Subtree of Another Tree
+- Construct Binary Tree from Preorder and Inorder Traversal
+- Validate Binary Search Tree
+- Kth Smallest Element in a BST
+- Lowest Common Ancestor of a Binary Search Tree
+- Implement Trie (Prefix Tree)
+- Add and Search Word - Data Structure Design
+- Word Search II
+- Merge k Sorted Lists
 
-## 📈 Progress Tracking
+### Dynamic Programming (15 problems) 🚧
+- Climbing Stairs
+- House Robber
+- House Robber II
+- Decode Ways
+- Unique Paths
+- Jump Game
+- Longest Increasing Subsequence
+- Coin Change
+- Longest Common Subsequence
+- Word Break
+- Combination Sum IV
+- House Robber III
+- Perfect Squares
+- Maximum Product Subarray
+- Maximum Sum Subarray
 
-Use this checklist to track your progress:
+## 🎯 Functional Programming Patterns
 
-- [ ] Arrays (0/15)
-- [ ] Strings (0/8)
-- [ ] Linked Lists (0/6)
-- [ ] Trees (0/15)
-- [ ] Dynamic Programming (0/15)
-- [ ] Graph (0/6)
-- [ ] Interval (0/3)
-- [ ] Matrix (0/2)
-- [ ] Math (0/5)
+### 1. Stream API Patterns
+
+```java
+// Basic Stream Operations
+list.stream()
+    .filter(predicate)
+    .map(function)
+    .collect(Collectors.toList());
+
+// Parallel Processing
+list.parallelStream()
+    .filter(predicate)
+    .collect(Collectors.toList());
+
+// Reduction Operations
+list.stream()
+    .reduce(identity, accumulator);
+
+// Grouping and Partitioning
+list.stream()
+    .collect(Collectors.groupingBy(Function.identity()));
+```
+
+### 2. Lambda Expressions
+
+```java
+// Simple lambda
+x -> x * 2
+
+// Method reference
+String::toUpperCase
+
+// Complex lambda
+(x, y) -> {
+    // Complex logic
+    return result;
+}
+```
+
+### 3. Functional Interfaces
+
+```java
+// Predicate
+Predicate<Integer> isEven = x -> x % 2 == 0;
+
+// Function
+Function<String, Integer> stringLength = String::length;
+
+// Consumer
+Consumer<String> printer = System.out::println;
+
+// Supplier
+Supplier<String> stringSupplier = () -> "Hello";
+```
+
+## 📈 Performance Analysis
+
+### Time Complexity Patterns
+
+| Pattern | Time Complexity | Use Case |
+|---------|----------------|----------|
+| Single Stream Pass | O(n) | Linear processing |
+| Nested Streams | O(n²) | Pair comparisons |
+| Parallel Streams | O(n/p) | CPU-intensive tasks |
+| Stream with Sorting | O(n log n) | Ordered processing |
+| Stream with Reduction | O(n) | Aggregation operations |
+
+### Space Complexity Patterns
+
+| Pattern | Space Complexity | Use Case |
+|---------|------------------|----------|
+| Stream with Collectors | O(n) | Collection building |
+| Stream with Primitive Types | O(1) | Memory efficient |
+| Stream with Intermediate Collections | O(n) | Data transformation |
+| Parallel Streams | O(n) | Thread-safe processing |
+
+## 🎨 Visual Examples
+
+### Two Sum - Stream API Approach
+
+```mermaid
+graph TD
+    A[Input Array] --> B[IntStream.range]
+    B --> C[.boxed]
+    C --> D[.filter with HashMap]
+    D --> E[.map to indices]
+    E --> F[.findFirst]
+    F --> G[Result or Empty]
+    
+    style A fill:#e1f5fe
+    style G fill:#c8e6c9
+```
+
+### Sliding Window Pattern
+
+```mermaid
+graph LR
+    A[Left Pointer] --> B[Window]
+    B --> C[Right Pointer]
+    C --> D{Valid Window?}
+    D -->|Yes| E[Update Result]
+    D -->|No| F[Move Left]
+    F --> A
+    E --> G[Move Right]
+    G --> C
+    
+    style E fill:#c8e6c9
+    style F fill:#ffcdd2
+```
+
+## 🔧 Advanced Features
+
+### 1. Custom Collectors
+
+```java
+public class TwoSumCollector implements Collector<Integer, Map<Integer, Integer>, int[]> {
+    // Custom collector implementation
+    // for Two Sum problem
+}
+```
+
+### 2. Parallel Processing
+
+```java
+// Parallel stream for large datasets
+largeList.parallelStream()
+    .filter(predicate)
+    .collect(Collectors.toList());
+```
+
+### 3. Memoization
+
+```java
+Map<Integer, Integer> memo = new HashMap<>();
+
+Function<Integer, Integer> fibonacci = n -> 
+    memo.computeIfAbsent(n, k -> 
+        k < 2 ? k : fibonacci.apply(k - 1) + fibonacci.apply(k - 2));
+```
+
+## 📚 Documentation
+
+### Comprehensive Guides
+
+1. **[Functional Programming Guide](docs/FUNCTIONAL_PROGRAMMING_GUIDE.md)** - Complete guide to functional programming concepts
+2. **[Solution Diagrams](docs/SOLUTION_DIAGRAMS.md)** - Visual representations of all algorithms
+3. **[Array Problems](docs/ARRAYS_PROBLEMS.md)** - Detailed array problem solutions
+4. **[String Problems](docs/STRINGS_PROBLEMS.md)** - Comprehensive string problem solutions
+
+### Key Learning Resources
+
+- **Stream API Documentation**: [Oracle Java 8 Stream API](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html)
+- **Functional Programming**: [Java 8 Functional Programming](https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html)
+- **LeetCode Problems**: [LeetCode Blind 75](https://leetcode.com/discuss/general-discussion/460599/blind-75-leetcode-questions)
+
+## 🚀 Benefits of Functional Programming
+
+### 1. **Readability**
+- Code is more declarative and easier to understand
+- Less boilerplate code
+- Clear intent and purpose
+
+### 2. **Maintainability**
+- Fewer bugs due to immutability
+- Easier to test and debug
+- Better code organization
+
+### 3. **Composability**
+- Functions can be easily combined
+- Reusable components
+- Modular design
+
+### 4. **Parallelism**
+- Easy to parallelize operations
+- Better performance on multi-core systems
+- Thread-safe operations
+
+### 5. **Immutability**
+- Safer code with fewer side effects
+- Predictable behavior
+- Easier to reason about
+
+## 🎯 Best Practices
+
+### 1. Choose the Right Approach
+
+```java
+// Use Stream API for:
+// - Data transformation
+// - Filtering and mapping
+// - Aggregation operations
+// - Parallel processing
+
+// Use traditional loops for:
+// - Complex state management
+// - Performance-critical sections
+// - Simple iterations
+```
+
+### 2. Memory Management
+
+```java
+// Good: Lazy evaluation
+list.stream()
+    .filter(predicate)
+    .findFirst();
+
+// Avoid: Creating intermediate collections unnecessarily
+list.stream()
+    .collect(Collectors.toList())
+    .stream()
+    .filter(predicate);
+```
+
+### 3. Error Handling
+
+```java
+// Use Optional for safe operations
+Optional.ofNullable(value)
+    .map(transform)
+    .orElse(defaultValue);
+```
+
+## 🏆 Performance Tips
+
+### 1. Use Primitive Streams
+
+```java
+// Better performance
+int[] array = {1, 2, 3, 4, 5};
+int sum = Arrays.stream(array).sum();
+
+// Instead of
+int sum = Arrays.stream(array)
+    .boxed()
+    .mapToInt(Integer::intValue)
+    .sum();
+```
+
+### 2. Parallel Processing
+
+```java
+// For CPU-intensive operations
+largeList.parallelStream()
+    .filter(predicate)
+    .collect(Collectors.toList());
+```
+
+### 3. Lazy Evaluation
+
+```java
+// Only processes what's needed
+list.stream()
+    .filter(predicate)
+    .findFirst();
+```
 
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
-3. Add your solution with proper documentation
-4. Submit a pull request
+3. Add your functional solution
+4. Include comprehensive documentation
+5. Add test cases
+6. Submit a pull request
 
-## 📝 License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- LeetCode for providing the problem set
-- The coding interview community for valuable insights
-- [YouTube reference](https://www.youtube.com/watch?v=PieZjz2Pyhw&t=4205s) for additional learning resources
+- **LeetCode** for providing the problem set
+- **Oracle** for Java Stream API documentation
+- **YouTube Reference**: [LeetCode Blind 75](https://www.youtube.com/watch?v=PieZjz2Pyhw&t=4205s)
+- **Community** for valuable insights and feedback
 
-## 📞 Contact
+## 🎉 Conclusion
 
-For questions or suggestions, please open an issue or contact the maintainers.
+This repository demonstrates the power of functional programming in Java using the Stream API. Each solution is carefully crafted to show different functional programming patterns while maintaining optimal performance.
+
+**Key Takeaways:**
+- Functional programming makes code more readable and maintainable
+- Stream API provides powerful data processing capabilities
+- Multiple approaches exist for each problem
+- Performance considerations are important
+- Documentation and visualization aid understanding
 
 ---
 
-**Happy Coding! 🎉**
+**Happy Functional Programming! 🚀**
 
-*Remember: The key to mastering these problems is understanding the patterns, not memorizing solutions.*
+*Remember: The best solution is the one that balances readability, maintainability, and performance for your specific use case.*
