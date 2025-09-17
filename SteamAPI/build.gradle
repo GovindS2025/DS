@@ -1,0 +1,160 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.leetcode'
+version = '1.0.0'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit 5 for testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.2'
+    
+    // AssertJ for fluent assertions
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+    
+    // Mockito for mocking
+    testImplementation 'org.mockito:mockito-core:5.3.1'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.3.1'
+}
+
+application {
+    mainClass = 'com.leetcode.blind75.LeetCodeBlind75Runner'
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+}
+
+// Custom task to run specific problem categories
+task runArrays(type: JavaExec) {
+    group = 'application'
+    description = 'Run all array problems'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.leetcode.blind75.arrays.ArraySolutions'
+}
+
+task runStrings(type: JavaExec) {
+    group = 'application'
+    description = 'Run all string problems'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.leetcode.blind75.strings.StringSolutions'
+}
+
+task runLinkedLists(type: JavaExec) {
+    group = 'application'
+    description = 'Run all linked list problems'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.leetcode.blind75.linkedlist.LinkedListSolutions'
+}
+
+task runTrees(type: JavaExec) {
+    group = 'application'
+    description = 'Run all tree problems'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.leetcode.blind75.trees.TreeSolutions'
+}
+
+task runDP(type: JavaExec) {
+    group = 'application'
+    description = 'Run all dynamic programming problems'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.leetcode.blind75.dp.DPSolutions'
+}
+
+// Custom task to generate documentation
+task generateDocs(type: JavaExec) {
+    group = 'documentation'
+    description = 'Generate problem documentation'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.leetcode.blind75.DocumentationGenerator'
+}
+
+// Custom task to run performance tests
+task performanceTest(type: JavaExec) {
+    group = 'verification'
+    description = 'Run performance tests on all solutions'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.leetcode.blind75.PerformanceTester'
+}
+
+// Javadoc configuration
+javadoc {
+    options.addBooleanOption('html5', true)
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charset', 'UTF-8')
+}
+
+// Compiler options
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xlint:unchecked', '-Xlint:deprecation']
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xlint:unchecked', '-Xlint:deprecation']
+}
+
+// Source sets configuration
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+        resources {
+            srcDirs = ['src/test/resources']
+        }
+    }
+}
+
+// Test configuration
+test {
+    // Set system properties for tests
+    systemProperty 'java.util.logging.config.file', 'src/test/resources/logging.properties'
+    
+    // Test output configuration
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+        showStandardStreams = false
+    }
+    
+    // JVM arguments for tests
+    jvmArgs = ['-Xmx2g', '-XX:+UseG1GC']
+}
+
+// Application plugin configuration
+run {
+    // JVM arguments for running the application
+    jvmArgs = ['-Xmx2g', '-XX:+UseG1GC']
+    
+    // System properties
+    systemProperty 'file.encoding', 'UTF-8'
+    systemProperty 'user.timezone', 'UTC'
+}
+
+// Wrapper configuration
+wrapper {
+    gradleVersion = '8.0'
+    distributionType = Wrapper.DistributionType.ALL
+}
