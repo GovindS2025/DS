@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Sum Algorithm - Line by Line Execution</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .problem-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .code-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .code-section {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+        
+        .code-line {
+            padding: 8px 12px;
+            margin: 2px 0;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .code-line.current {
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+            transform: scale(1.02);
+        }
+        
+        .code-line.executed {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .code-line.highlight {
+            background-color: #FF9800;
+            color: white;
+        }
+        
+        .line-number {
+            color: #888;
+            margin-right: 15px;
+            user-select: none;
+        }
+        
+        .execution-panel {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .array-display {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .array-element {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #e3f2fd;
+            border: 2px solid #2196F3;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .array-element.current {
+            background: #4CAF50;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+        }
+        
+        .array-element.found {
+            background: #FF5722;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 87, 34, 0.5);
+        }
+        
+        .array-element.processed {
+            background: #9E9E9E;
+            color: white;
+        }
+        
+        .array-index {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .map-display {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+        
+        .map-entry {
+            display: inline-block;
+            background: #e3f2fd;
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #2196F3;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .map-entry.new {
+            background: #4CAF50;
+            color: white;
+            animation: pulse 0.5s ease-in-out;
+        }
+        
+        .map-entry.found {
+            background: #FF5722;
+            color: white;
+            animation: pulse 0.5s ease-in-out;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .variables {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .variable {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #4CAF50;
+        }
+        
+        .variable h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        
+        .variable .value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2E7D32;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .explanation {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .step-info {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px 0;
+            color: #666;
+        }
+        
+        .result {
+            background: #c8e6c9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px solid #4CAF50;
+        }
+        
+        .result h3 {
+            color: #2E7D32;
+            margin: 0 0 10px 0;
+        }
+        
+        .result .answer {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1B5E20;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Two Sum Algorithm - Line by Line Execution</h1>
+        
+        <div class="problem-info">
+            <h3>📝 Problem Statement</h3>
+            <p><strong>Given:</strong> An array of integers <code>nums</code> and an integer <code>target</code></p>
+            <p><strong>Return:</strong> Indices of the two numbers such that they add up to <code>target</code></p>
+            <p><strong>Example:</strong> nums = [2, 7, 11, 15], target = 9 → [0, 1] (because nums[0] + nums[1] = 2 + 7 = 9)</p>
+        </div>
+        
+        <div class="step-info">
+            Step <span id="stepNum">0</span> of <span id="totalSteps">0</span>
+        </div>
+        
+        <div class="code-container">
+            <div class="code-section">
+                <h3>💻 Java Code</h3>
+                <div class="code-line" data-line="1">
+                    <span class="line-number">1</span>public int[] twoSum(int[] nums, int target) {
+                </div>
+                <div class="code-line" data-line="2">
+                    <span class="line-number">2</span>&nbsp;&nbsp;&nbsp;&nbsp;Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();
+                </div>
+                <div class="code-line" data-line="3">
+                    <span class="line-number">3</span>
+                </div>
+                <div class="code-line" data-line="4">
+                    <span class="line-number">4</span>&nbsp;&nbsp;&nbsp;&nbsp;for (int i=0; i&lt;nums.length; i++){
+                </div>
+                <div class="code-line" data-line="5">
+                    <span class="line-number">5</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int diff= target- nums[i];
+                </div>
+                <div class="code-line" data-line="6">
+                    <span class="line-number">6</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(map.containsKey(diff)){
+                </div>
+                <div class="code-line" data-line="7">
+                    <span class="line-number">7</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return new int[]
+                </div>
+                <div class="code-line" data-line="8">
+                    <span class="line-number">8</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                </div>
+                <div class="code-line" data-line="9">
+                    <span class="line-number">9</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map.get(diff),i
+                </div>
+                <div class="code-line" data-line="10">
+                    <span class="line-number">10</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+                </div>
+                <div class="code-line" data-line="11">
+                    <span class="line-number">11</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                </div>
+                <div class="code-line" data-line="12">
+                    <span class="line-number">12</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;map.put(nums[i], i);
+                </div>
+                <div class="code-line" data-line="13">
+                    <span class="line-number">13</span>&nbsp;&nbsp;&nbsp;&nbsp;}
+                </div>
+                <div class="code-line" data-line="14">
+                    <span class="line-number">14</span>&nbsp;&nbsp;&nbsp;&nbsp;return null;
+                </div>
+                <div class="code-line" data-line="15">
+                    <span class="line-number">15</span>}
+                </div>
+            </div>
+            
+            <div class="execution-panel">
+                <h3>🎬 Execution State</h3>
+                
+                <div class="array-display" id="arrayDisplay"></div>
+                
+                <div class="variables">
+                    <div class="variable">
+                        <h4>Current Index (i)</h4>
+                        <div class="value" id="currentIndex">-</div>
+                    </div>
+                    <div class="variable">
+                        <h4>Current Value</h4>
+                        <div class="value" id="currentValue">-</div>
+                    </div>
+                    <div class="variable">
+                        <h4>Difference</h4>
+                        <div class="value" id="difference">-</div>
+                    </div>
+                    <div class="variable">
+                        <h4>Target</h4>
+                        <div class="value" id="target">9</div>
+                    </div>
+                </div>
+                
+                <div class="map-display">
+                    <h4>HashMap Contents</h4>
+                    <div id="mapContents">Empty</div>
+                </div>
+                
+                <div class="result" id="result" style="display: none;">
+                    <h3>🎉 Result Found!</h3>
+                    <div class="answer" id="resultAnswer"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="startAnimation()" id="startBtn">🚀 Start Animation</button>
+            <button class="btn" onclick="nextStep()" id="nextBtn">⏭️ Next Step</button>
+            <button class="btn" onclick="prevStep()" id="prevBtn" disabled>⏮️ Previous</button>
+            <button class="btn" onclick="reset()" id="resetBtn">🔄 Reset</button>
+        </div>
+        
+        <div class="explanation" id="explanation">
+            <h3>📝 Explanation</h3>
+            <p>Click "Start Animation" to see the Two Sum algorithm execute line by line!</p>
+        </div>
+    </div>
+
+    <script>
+        // Algorithm data
+        const nums = [2, 7, 11, 15];
+        const target = 9;
+        
+        // Execution steps
+        const steps = [
+            {
+                line: 1,
+                action: "Function Start",
+                explanation: "Starting twoSum function with nums = [2, 7, 11, 15] and target = 9"
+            },
+            {
+                line: 2,
+                action: "Initialize HashMap",
+                explanation: "Creating an empty HashMap to store value -> index mappings"
+            },
+            {
+                line: 4,
+                action: "Start Loop",
+                explanation: "Starting for loop: i = 0, checking if i < nums.length (4)"
+            },
+            {
+                line: 5,
+                action: "Calculate Difference",
+                explanation: "i = 0, nums[0] = 2, diff = target - nums[i] = 9 - 2 = 7"
+            },
+            {
+                line: 6,
+                action: "Check HashMap",
+                explanation: "Checking if map contains key 7. Map is empty, so containsKey(7) = false"
+            },
+            {
+                line: 12,
+                action: "Add to HashMap",
+                explanation: "Adding nums[0] = 2 with index 0 to the map"
+            },
+            {
+                line: 4,
+                action: "Loop Iteration",
+                explanation: "i = 1, checking if i < nums.length (4)"
+            },
+            {
+                line: 5,
+                action: "Calculate Difference",
+                explanation: "i = 1, nums[1] = 7, diff = target - nums[i] = 9 - 7 = 2"
+            },
+            {
+                line: 6,
+                action: "Check HashMap",
+                explanation: "Checking if map contains key 2. Map contains {2: 0}, so containsKey(2) = true!"
+            },
+            {
+                line: 7,
+                action: "Return Result",
+                explanation: "Found the pair! Returning [map.get(2), i] = [0, 1]"
+            }
+        ];
+        
+        // State variables
+        let currentStep = 0;
+        let isAnimating = false;
+        let animationInterval;
+        let map = new Map();
+        let currentIndex = -1;
+        let currentValue = null;
+        let difference = null;
+        let found = false;
+        
+        // Initialize display
+        function updateDisplay() {
+            const step = steps[currentStep];
+            
+            // Update code highlighting
+            document.querySelectorAll('.code-line').forEach(line => {
+                line.classList.remove('current', 'executed', 'highlight');
+            });
+            
+            if (step.line) {
+                const currentLine = document.querySelector(`[data-line="${step.line}"]`);
+                if (currentLine) {
+                    currentLine.classList.add('current');
+                }
+                
+                // Mark previous lines as executed
+                for (let i = 1; i < step.line; i++) {
+                    const prevLine = document.querySelector(`[data-line="${i}"]`);
+                    if (prevLine) {
+                        prevLine.classList.add('executed');
+                    }
+                }
+            }
+            
+            // Update array display
+            updateArrayDisplay();
+            
+            // Update variables
+            document.getElementById('currentIndex').textContent = currentIndex;
+            document.getElementById('currentValue').textContent = currentValue !== null ? currentValue : '-';
+            document.getElementById('difference').textContent = difference !== null ? difference : '-';
+            
+            // Update map display
+            updateMapDisplay();
+            
+            // Update explanation
+            document.getElementById('explanation').innerHTML = 
+                `<h3>📝 Explanation</h3><p>${step.explanation}</p>`;
+            
+            // Show result if found
+            if (found) {
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('resultAnswer').textContent = `[${map.get(difference)}, ${currentIndex}]`;
+            } else {
+                document.getElementById('result').style.display = 'none';
+            }
+        }
+        
+        function updateArrayDisplay() {
+            const arrayDisplay = document.getElementById('arrayDisplay');
+            arrayDisplay.innerHTML = '';
+            
+            nums.forEach((value, index) => {
+                const element = document.createElement('div');
+                element.className = 'array-element';
+                element.innerHTML = `
+                    <div>${value}</div>
+                    <div class="array-index">[${index}]</div>
+                `;
+                
+                if (index === currentIndex) {
+                    element.classList.add('current');
+                } else if (index < currentIndex) {
+                    element.classList.add('processed');
+                }
+                
+                if (found && (index === currentIndex || index === map.get(difference))) {
+                    element.classList.add('found');
+                }
+                
+                arrayDisplay.appendChild(element);
+            });
+        }
+        
+        function updateMapDisplay() {
+            const mapContents = document.getElementById('mapContents');
+            
+            if (map.size === 0) {
+                mapContents.textContent = 'Empty';
+                return;
+            }
+            
+            mapContents.innerHTML = '';
+            map.forEach((index, value) => {
+                const entry = document.createElement('div');
+                entry.className = 'map-entry';
+                entry.textContent = `${value} → ${index}`;
+                
+                if (found && value === difference) {
+                    entry.classList.add('found');
+                } else if (value === currentValue) {
+                    entry.classList.add('new');
+                }
+                
+                mapContents.appendChild(entry);
+            });
+        }
+        
+        function executeStep() {
+            const step = steps[currentStep];
+            
+            switch (step.action) {
+                case "Function Start":
+                    // Initialize state
+                    break;
+                    
+                case "Initialize HashMap":
+                    map.clear();
+                    break;
+                    
+                case "Start Loop":
+                    currentIndex = 0;
+                    currentValue = nums[currentIndex];
+                    break;
+                    
+                case "Calculate Difference":
+                    difference = target - currentValue;
+                    break;
+                    
+                case "Check HashMap":
+                    if (map.has(difference)) {
+                        found = true;
+                    }
+                    break;
+                    
+                case "Add to HashMap":
+                    map.set(currentValue, currentIndex);
+                    break;
+                    
+                case "Loop Iteration":
+                    currentIndex++;
+                    if (currentIndex < nums.length) {
+                        currentValue = nums[currentIndex];
+                    }
+                    break;
+                    
+                case "Return Result":
+                    // Result is already set
+                    break;
+            }
+        }
+        
+        // Animation functions
+        function startAnimation() {
+            if (isAnimating) return;
+            
+            isAnimating = true;
+            document.getElementById("startBtn").textContent = "⏸️ Pause";
+            document.getElementById("startBtn").onclick = pauseAnimation;
+            
+            animationInterval = setInterval(() => {
+                if (currentStep >= steps.length - 1) {
+                    pauseAnimation();
+                    return;
+                }
+                nextStep();
+            }, 3000);
+        }
+        
+        function pauseAnimation() {
+            isAnimating = false;
+            clearInterval(animationInterval);
+            document.getElementById("startBtn").textContent = "🚀 Resume";
+            document.getElementById("startBtn").onclick = startAnimation;
+        }
+        
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                executeStep();
+                updateDisplay();
+                updateButtons();
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                // Reset state to previous step
+                resetState();
+                for (let i = 0; i <= currentStep; i++) {
+                    executeStep();
+                }
+                updateDisplay();
+                updateButtons();
+            }
+        }
+        
+        function reset() {
+            pauseAnimation();
+            currentStep = 0;
+            resetState();
+            updateDisplay();
+            updateButtons();
+            document.getElementById("startBtn").textContent = "🚀 Start Animation";
+            document.getElementById("startBtn").onclick = startAnimation;
+        }
+        
+        function resetState() {
+            map.clear();
+            currentIndex = -1;
+            currentValue = null;
+            difference = null;
+            found = false;
+        }
+        
+        function updateButtons() {
+            document.getElementById("nextBtn").disabled = currentStep >= steps.length - 1;
+            document.getElementById("prevBtn").disabled = currentStep <= 0;
+        }
+        
+        // Initialize
+        updateDisplay();
+        updateButtons();
+    </script>
+</body>
+</html>
